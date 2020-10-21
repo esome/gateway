@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/nautilus/graphql"
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -137,6 +138,19 @@ func TestGateway(t *testing.T) {
 		}
 
 		assert.Equal(t, priorities, gateway.locationPriorities)
+	})
+
+	t.Run("WithLogLevel", func(t *testing.T) {
+		// assert standard log-level
+		assert.Equal(t, logrus.WarnLevel, logLevel)
+
+		// make the logging super verbose
+		_, err := New(sources, WithLogLevel(logrus.DebugLevel))
+		if !assert.NoError(t, err) {
+			return
+		}
+
+		assert.Equal(t, logrus.DebugLevel, logLevel)
 	})
 
 	t.Run("fieldURLs ignore introspection", func(t *testing.T) {

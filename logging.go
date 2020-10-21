@@ -71,11 +71,13 @@ func (l *Logger) QueryPlanStep(step *QueryPlanStep) {
 
 var log *Logger
 
+// by default only log the warning severity or above.
+var logLevel = logrus.WarnLevel
+
 func newLogEntry() *logrus.Entry {
 	entry := logrus.New()
 
-	// only log the warning severity or above.
-	entry.SetLevel(logrus.WarnLevel)
+	entry.SetLevel(logLevel)
 
 	// configure the formatter
 	entry.SetFormatter(&logrus.TextFormatter{
@@ -86,7 +88,7 @@ func newLogEntry() *logrus.Entry {
 
 	return logrus.NewEntry(entry)
 }
+
 func init() {
 	log = &Logger{}
-
 }

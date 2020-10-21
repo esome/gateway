@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/sirupsen/logrus"
 	"github.com/vektah/gqlparser/v2/ast"
 
 	"github.com/nautilus/graphql"
@@ -268,6 +269,14 @@ func WithQueryerFactory(factory *QueryerFactory) Option {
 func WithLocationPriorities(priorities []string) Option {
 	return func(g *Gateway) {
 		g.locationPriorities = priorities
+	}
+}
+
+// WithLogLevel returns an Option that changes the level of verbosity used for the
+// log messages created in the gateway
+func WithLogLevel(level logrus.Level) Option {
+	return func(_ *Gateway) {
+		logLevel = level
 	}
 }
 
